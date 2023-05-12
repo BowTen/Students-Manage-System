@@ -43,7 +43,7 @@ public class LoginStart extends JFrame implements ActionListener {
     }
 
     private void initData() throws IOException {
-        List<String> userInfo = FileUtil.readUtf8Lines("D:\\Codes\\SMS\\Students Management System\\src\\datasrc\\userinfo.txt");
+        List<String> userInfo = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\userinfo.txt");
         for (String s : userInfo) {
             String[] splits = s.split("&");
             allUsers.add(new User(splits[0].split("=")[1],splits[1].split("=")[1]));
