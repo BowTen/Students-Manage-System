@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/8">
+    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/12 测试了下表格">
+      <change afterPath="$PROJECT_DIR$/src/bean/JTableDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bean/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/imgresrc/加拿大精灵岛.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/imgresrc/法国吕衲峰.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bean/User.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/LoginStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/LoginStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/windows/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/windows/Register.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/datasrc/userinfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/userinfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +52,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Codes/SMS/Students Management System/lib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Codes/Students Management System/src/imgresrc&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -55,6 +63,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Codes\Students Management System\src\imgresrc" />
       <recent name="D:\Codes\SMS\Students Management System\lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -80,7 +89,11 @@
       <workItem from="1683518339600" duration="531000" />
       <workItem from="1683558729261" duration="28000" />
       <workItem from="1683598060881" duration="2000" />
-      <workItem from="1683854607874" duration="5171000" />
+      <workItem from="1683854607874" duration="5229000" />
+      <workItem from="1683871253005" duration="556000" />
+      <workItem from="1683875525041" duration="8407000" />
+      <workItem from="1683945139455" duration="1847000" />
+      <workItem from="1684147033105" duration="9999000" />
     </task>
     <task id="LOCAL-00001" summary="第一天做了简单的登录注册界面">
       <created>1683297317186</created>
@@ -110,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683558742740</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="5/12 测试了下表格">
+      <created>1683862118490</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683862118490</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,7 +151,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="第一天做了简单的登录注册界面" />
     <MESSAGE value="5/8" />
-    <option name="LAST_COMMIT_MESSAGE" value="5/8" />
+    <MESSAGE value="5/12 测试了下表格" />
+    <option name="LAST_COMMIT_MESSAGE" value="5/12 测试了下表格" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
