@@ -6,6 +6,6 @@ public class StudentSystem {
     public static void main(String[] args) throws IOException {
 //        LoginStart loginWindow = new LoginStart();
 //        new JTableDemo();
-        new MainWindow("123");
+        new MainWindow("2022001");
     }
 }

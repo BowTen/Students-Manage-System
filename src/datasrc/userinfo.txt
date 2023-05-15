@@ -1,5 +1,3 @@
-username=root&password=root
-username=3182921986&password=3182921986Zz
-username=chengxiao&password=cx66666
-username=shengminxuan&password=smx12345
-username=sunjinxuan&password=sjx98765&3
+root&root
+2022001&zhangsan
+2022002&lisi

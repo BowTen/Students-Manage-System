@@ -1,6 +1,7 @@
 package com.windows;
 
 import bean.Student;
+import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -8,9 +9,11 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class MainWindow extends JFrame {
     JPanel console = new JPanel();
+    JPanel baseDataPanel = new JPanel();
     Object rowData[][] = {
             new Object[] {"张三", 20, "男"},
             new Object[] {"李四", 24, "女"},
@@ -37,7 +40,20 @@ public class MainWindow extends JFrame {
     }
 
     private void initData(String id) {
-
+        List<String> stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
+        for (String s : stuData) {
+            if(s.split("&")[0].equals(id)){
+                String tmp[] = s.split("&");
+                //初始化学生信息
+                curUser = new Student(tmp[0], tmp[1], tmp[2],tmp[3],tmp[4]);
+                String courses[] = tmp[5].split("#");
+                //初始化课程
+                for (String cours : courses) {
+                    curUser.courses.add(cours);
+                }
+                break;
+            }
+        }
     }
 
     private void initImage() {
@@ -70,6 +86,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                console.setVisible(false);
+                System.out.println(curUser);
                 System.out.println("基础信息");
             }
         });

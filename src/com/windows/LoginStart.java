@@ -45,7 +45,7 @@ public class LoginStart extends JFrame implements ActionListener {
         List<String> userInfo = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\userinfo.txt");
         for (String s : userInfo) {
             String[] splits = s.split("&");
-            allUsers.add(new Student(splits[0].split("=")[1],splits[1].split("=")[1]));
+            allUsers.add(new Student(splits[0],splits[1]));
         }
     }
 
