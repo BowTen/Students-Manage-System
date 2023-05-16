@@ -1,5 +1,6 @@
 package bean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Student{
@@ -36,6 +37,22 @@ public class Student{
     public Student(String id, String passWord) {
         this.id = id;
         this.passWord = passWord;
+    }
+
+    //获取平均分
+    public double GetAverGrades(){
+        double ret = 0;
+        for (Course cours : courses) {
+            ret += cours.GetGrades(name);
+        }
+        ret /= courses.size();
+        return ret;
+    }
+
+    //获取平均绩点
+    public double GetAverPoint(){
+        double grades = GetAverGrades();
+        return new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2,BigDecimal.ROUND_UP).doubleValue();
     }
 
     //重写equals
