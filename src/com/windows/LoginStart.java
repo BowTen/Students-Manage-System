@@ -94,6 +94,8 @@ public class LoginStart extends JFrame implements ActionListener {
 
         //添加事件
         login.addActionListener(this);
+        userNameText.addActionListener(this);
+        passwordText.addActionListener(this);
     }
 
     private void initImage() {
@@ -116,12 +118,16 @@ public class LoginStart extends JFrame implements ActionListener {
         setResizable(false);
         //取消默认居中方式
         setLayout(null);
+        //设置大小不可变
+        setResizable(false);
+        //设置总是置顶
+        setAlwaysOnTop(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
-        if(src == login){//登陆按钮
+        if(src == login || src == passwordText){//登陆按钮或密码框按回车
             String identityInput = userNameText.getText();
             String passwordInput = passwordText.getText();
             if(identityInput.length() == 0){
@@ -134,11 +140,15 @@ public class LoginStart extends JFrame implements ActionListener {
             }
             if(allUsers.contains(new Student(identityInput,passwordInput))){
                 MainWindow mainWindow = new MainWindow(identityInput);
+                setVisible(false);
                 return;
             }else{
                 JOptionPane.showMessageDialog(null,"用户名或密码错误");
                 return;
             }
+        }else if(src == userNameText){//用户名框按回车
+            //密码框请求光标
+            passwordText.requestFocus();
         }
     }
 }
