@@ -139,7 +139,10 @@ public class LoginStart extends JFrame implements ActionListener {
                 return;
             }
             if(allUsers.contains(new Student(identityInput,passwordInput))){
-                MainWindow mainWindow = new MainWindow(identityInput);
+//                if(identityInput.equals("root"))
+//                    new RootWindow();
+//                else
+                    new MainWindow(identityInput);
                 setVisible(false);
                 return;
             }else{

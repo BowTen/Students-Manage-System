@@ -45,13 +45,17 @@ public class Student{
         for (Course cours : courses) {
             ret += cours.GetGrades(name);
         }
+        if(ret == 0)
+            return 0;
         ret /= courses.size();
-        return ret;
+        return new BigDecimal(ret).setScale(2,BigDecimal.ROUND_UP).doubleValue();
     }
 
     //获取平均绩点
     public double GetAverPoint(){
         double grades = GetAverGrades();
+        if(grades == 0)
+            return 0;
         return new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2,BigDecimal.ROUND_UP).doubleValue();
     }
 

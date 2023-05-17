@@ -1,7 +1,5 @@
 package com.windows;
 
-import bean.Course;
-import bean.Student;
 import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
@@ -11,11 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Stack;
 
-public class MainWindow extends JFrame {
+public class RootWindow extends JFrame {
+
     //操作面板
     JPanel consolePanel = new JPanel();
     //信息面板
@@ -23,8 +20,11 @@ public class MainWindow extends JFrame {
 
     //主操作面板
     JPanel mainOpePanel = new JPanel();
-    //基本信息面板
-    JPanel baseInfPanel = new JPanel();
+    //成绩查询面板
+    JPanel gradesOpePanel = new JPanel();
+
+    //学生信息面板
+    JPanel stuPanel = new JPanel();
     //成绩面板
     JPanel gradesPanel = new JPanel();
     //课程面板
@@ -44,12 +44,14 @@ public class MainWindow extends JFrame {
     private final int WIDTH = 1200;
     private final int HEIGHT = 1400;
 
-    //当前学生
-    private Student curUser;
+    //学生信息
+    java.util.List<String> stuData;
+    //课程信息
+    java.util.List<String> courseData;
 
     //构造函数
-    public MainWindow(String id) throws HeadlessException {
-        initData(id);
+    public RootWindow() throws HeadlessException {
+        initData();
         initJFrame();
         initView();
 
@@ -58,107 +60,68 @@ public class MainWindow extends JFrame {
     }
 
     //初始化数据
-    private void initData(String id) {
-        //初始化学生信息
-        List<String> stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
-        for (String s : stuData) {
-            if (s.split("&")[0].equals(id)) {
-                String tmp[] = s.split("&");
-                curUser = new Student(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]);
-                String courses[] = tmp[5].split("#");
-                //初始化学生课程
-                List<String> allCourse = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
-                for (String cours : courses) {
-                    for (String s1 : allCourse) {
-                        if (s1.contains(cours)) {
-                            String[] split = s1.split("&");
-                            Course course = new Course(split[0], split[1]);
-                            String[] students = split[2].split("#");
-                            for (String student : students) {
-                                String[] nameAndgrades = student.split("@");
-                                course.students.put(nameAndgrades[0], Double.parseDouble(nameAndgrades[1]));
-                            }
-                            course.InitGrades();
-                            curUser.courses.add(course);
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
+    private void initData() {
+        //读取学生信息
+        stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
+        //读取课程信息
+        courseData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
 
-        }
 
-        if(curUser == null)
-            curUser = new Student();
-        int row = curUser.courses.size();
-        rowData = new Object[row][5];
-        for (int i = 0; i < row; i++) {
-            rowData[i][0] = i + 1;
-            rowData[i][1] = curUser.courses.get(i).name;
-            Double grades = curUser.courses.get(i).GetGrades(curUser.name);
-            if (grades == null) {
-                rowData[i][2] = "暂无数据";
-                rowData[i][3] = "暂无数据";
-                rowData[i][4] = "暂无数据";
-            } else {
-                //计算绩点并保留两位小数
-                Double point = new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2, BigDecimal.ROUND_UP).doubleValue();
-                rowData[i][2] = grades;
-                rowData[i][3] = point;
-                rowData[i][4] = curUser.courses.get(i).GetRank(curUser.name);
-            }
-        }
-
-        if (curUser == null)
-            curUser = new Student(null, null, null, null, null);
         //设置边框
         consoleBorder.setTitleFont(new Font(null, 1, 20));
         infBorder.setTitleFont(new Font(null, 1, 20));
 
 
-        initBaseInfPanel();
+        initStuPanel();
         initGradesPanel();
         initcoursePanel();
     }
 
-    //设置基础信息面板
-    private void initBaseInfPanel() {
+    //设置学生信息面板
+    private void initStuPanel() {
 
         //设置大小边界
-        baseInfPanel.setBounds(0, 0, WIDTH - 20, 705);
+        stuPanel.setBounds(0, 0, WIDTH - 20, 705);
         //设置边框
         TitledBorder tiBorder = new TitledBorder("基本信息");
         tiBorder.setTitleFont(new Font(null, 1, 20));
-        baseInfPanel.setBorder(tiBorder);
-        baseInfPanel.setLayout(null);
+        stuPanel.setBorder(tiBorder);
+        stuPanel.setLayout(null);
 
-        //姓名
-        JLabel name = new JLabel(curUser.name == null ? "暂无信息" : curUser.name);
-        name.setFont(new Font(null, 1, 100));
-        name.setBounds(30, 50, 1100, 100);
-        baseInfPanel.add(name);
-        //学号
-        JLabel id = new JLabel(curUser.id == null ? "暂无信息" : curUser.id);
-        id.setFont(new Font(null, 1, 40));
-        id.setBounds(30, 160, 1100, 40);
-        baseInfPanel.add(id);
+        //设置表格数据
+        int row = stuData.size();
+        Object rowData[][] = new Object[row][6];
+        Object headData[] = {"序号", "学号", "姓名", "学院", "专业", "班级"};
+        for (int i = 0; i < row; i++) {
+            String[] split = stuData.get(i).split("&");
+            rowData[i][0] = i + 1;    //编号
+            for (int j = 0; j < 5; j++) {
+                rowData[i][j+1] = split[j];
+            }
+        }
 
-        //学院
-        JLabel acdemy = new JLabel("所在学院：" + (curUser.academy == null ? "暂无信息" : curUser.academy));
-        acdemy.setFont(new Font(null, 0, 30));
-        acdemy.setBounds(30, 230, 500, 30);
-        baseInfPanel.add(acdemy);
-        //学专业院
-        JLabel major = new JLabel("专业：" + (curUser.major == null ? "暂无信息" : curUser.major));
-        major.setFont(new Font(null, 0, 30));
-        major.setBounds(30, 270, 500, 30);
-        baseInfPanel.add(major);
-        //班级
-        JLabel _class = new JLabel("班级：" + (curUser._class == null ? "暂无信息" : curUser._class));
-        _class.setFont(new Font(null, 0, 30));
-        _class.setBounds(30, 310, 500, 30);
-        baseInfPanel.add(_class);
+        //创建表格
+        JTable jTable = new JTable(rowData, headData);
+        //表格字体
+        jTable.setFont(new Font(null, 1, 20));
+        //表头字体
+        jTable.getTableHeader().setFont(new Font(null, 1, 20));
+        //表格尺寸
+        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTable.setRowHeight(30);
+        jTable.setPreferredSize(new Dimension(WIDTH - 70, 650));
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(300);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(300);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(160);
+        //滑动窗口
+        JScrollPane jScrollPane = new JScrollPane(jTable);
+        jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 650));
+        jScrollPane.setBounds(15, 35, WIDTH - 50, 650);
+        stuPanel.add(jScrollPane);
+
     }
 
     //设置成绩面板
@@ -191,31 +154,10 @@ public class MainWindow extends JFrame {
         jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 450));
         jScrollPane.setBounds(15, 35, WIDTH - 50, 450);
         gradesPanel.add(jScrollPane);
-
-        //平均分
-        JLabel averGrades = new JLabel("平均分：" + new Double(curUser.GetAverGrades()).toString());
-        averGrades.setFont(new Font(null, 1, 40));
-        averGrades.setBounds(50, 600, 500, 50);
-
-        //平均绩点
-        JLabel averPoint = new JLabel("平均绩点：" + new Double(curUser.GetAverPoint()).toString());
-        averPoint.setFont(new Font(null, 1, 40));
-        averPoint.setBounds(550, 600, 500, 50);
-
-        gradesPanel.add(averGrades);
-        gradesPanel.add(averPoint);
     }
 
     //设置课程面板
     private void initcoursePanel() {
-        int row = curUser.courses.size();
-        Object rowData[][] = new Object[row][3];
-        Object headData[] = {"序号", "课程", "任课教师"};
-        for (int i = 0; i < row; i++) {
-            rowData[i][0] = i + 1;
-            rowData[i][1] = curUser.courses.get(i).name;
-            rowData[i][2] = curUser.courses.get(i).teacher;
-        }
 
         //设置大小边界
         coursePanel.setBounds(0, 0, WIDTH - 20, 705);
@@ -224,6 +166,19 @@ public class MainWindow extends JFrame {
         tiBorder.setTitleFont(new Font(null, 1, 20));
         coursePanel.setBorder(tiBorder);
         coursePanel.setLayout(null);
+
+        int row = courseData.size();
+        Object rowData[][] = new Object[row][4];
+        Object headData[] = {"序号", "课程", "任课教师", "班级人数"};
+        for (int i = 0; i < row; i++) {
+            String[] split = courseData.get(i).split("&");
+            rowData[i][0] = i + 1;    //编号
+            for (int j = 0; j < 2; j++) {
+                rowData[i][j+1] = split[j];
+            }
+            rowData[i][3] = split[2].split("#").length; //班级人数
+        }
+
 
         //创建表格
         JTable jTable = new JTable(rowData, headData);
@@ -236,9 +191,9 @@ public class MainWindow extends JFrame {
         jTable.setRowHeight(50);
         jTable.setPreferredSize(new Dimension(WIDTH - 70, 650));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        for (int i = 1; i < 3; i++) {
-            jTable.getColumnModel().getColumn(i).setPreferredWidth(400);
-        }
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(600);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(200);
         //滑动窗口
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 650));
@@ -258,12 +213,10 @@ public class MainWindow extends JFrame {
         initMenu();
         initImage();
         initPanel();
-        initConsole();
     }
 
     //初始化操作台
-    private void initConsole() {
-        opePanels.push(mainOpePanel);
+    private void initMainOpePanel() {
 
         //设置面板
         mainOpePanel.setBounds(0, 0, WIDTH - 20, 400);
@@ -271,25 +224,25 @@ public class MainWindow extends JFrame {
         mainOpePanel.setBorder(consoleBorder);
         mainOpePanel.setLayout(null);
 
-        //功能：基本信息，成绩查询，课程查询
-        JButton baseInfo = new JButton("基本信息");
+        //功能：基本信息，成绩查询，课程查询，修改信息
+        JButton baseInfo = new JButton("学生信息");
         baseInfo.setFont(new Font(null, 1, 40));
-        baseInfo.setBounds(60, 140, 300, 120);
+        baseInfo.setBounds(60, 140, 225, 120);
         baseInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //若当前正在展示基本信息界面则return
-                if (!infPanels.isEmpty() && infPanels.peek() == baseInfPanel)
+                if (!infPanels.isEmpty() && infPanels.peek() == stuPanel)
                     return;
-                showDataPanel(baseInfPanel);
-                System.out.println("基础信息");
+                showDataPanel(stuPanel);
+                System.out.println("学生信息");
             }
         });
         mainOpePanel.add(baseInfo);
 
         JButton grades = new JButton("成绩查询");
         grades.setFont(new Font(null, 1, 40));
-        grades.setBounds(440, 140, 300, 120);
+        grades.setBounds(345, 140, 225, 120);
         grades.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -304,7 +257,7 @@ public class MainWindow extends JFrame {
 
         JButton course = new JButton("课程查询");
         course.setFont(new Font(null, 1, 40));
-        course.setBounds(820, 140, 300, 120);
+        course.setBounds(630, 140, 225, 120);
         course.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -317,7 +270,27 @@ public class MainWindow extends JFrame {
         });
         mainOpePanel.add(course);
 
-        consolePanel.add(mainOpePanel);
+        JButton change = new JButton("修改信息");
+        change.setFont(new Font(null, 1, 40));
+        change.setBounds(915, 140, 225, 120);
+        change.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //若当前正在展示基本信息界面则return
+                changeOpePanel(gradesOpePanel);
+                System.out.println("修改信息");
+            }
+        });
+        mainOpePanel.add(change);
+    }
+
+    private void changeOpePanel(JPanel panel) {
+        //如果有则关闭之前正在展示的界面
+        if (!opePanels.isEmpty()) {
+            opePanels.peek().setVisible(false);
+        }
+        opePanels.push(panel);
+        panel.setVisible(true);
     }
 
     //展示界面
@@ -389,22 +362,61 @@ public class MainWindow extends JFrame {
     //初始化面板
     private void initPanel() {
         //设置面板
+        initMainOpePanel();
+        initGradesOpePanel();
         consolePanel.setBounds(5, 210, WIDTH - 20, 400);
         infPanel.setBounds(5, 610, WIDTH - 20, 705);
         //设置默认布局
         consolePanel.setLayout(null);
         infPanel.setLayout(null);
 
-        gradesPanel.setVisible(false);
-        baseInfPanel.setVisible(false);
+        //设置子面板可见性
+        stuPanel.setVisible(false);
         coursePanel.setVisible(false);
+        mainOpePanel.setVisible(true);
+        gradesOpePanel.setVisible(false);
 
-        infPanel.add(gradesPanel);
-        infPanel.add(baseInfPanel);
+        //添加子面板
+        consolePanel.add(mainOpePanel);
+        consolePanel.add(gradesOpePanel);
+        infPanel.add(stuPanel);
         infPanel.add(coursePanel);
+
+        opePanels.push(mainOpePanel);
 
         add(consolePanel);
         add(infPanel);
+
+    }
+
+    private void initGradesOpePanel() {
+        //设置面板
+        gradesOpePanel.setBounds(0, 0, WIDTH - 20, 400);
+        //面板边框
+        TitledBorder titledBorder = new TitledBorder("成绩查询");
+        titledBorder.setTitleFont(new Font(null, 1, 20));
+        gradesOpePanel.setBorder(titledBorder);
+        gradesOpePanel.setLayout(null);
+
+        //返回按钮
+        JButton back = new JButton("返回");
+        back.setFont(new Font(null, 1, 30));
+        back.setBounds(40, 40, 100, 50);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //若当前正在展示基本信息界面则return
+                opePanelBack();
+                System.out.println("返回");
+            }
+        });
+        gradesOpePanel.add(back);
+    }
+
+    private void opePanelBack() {
+        opePanels.peek().setVisible(false);
+        opePanels.pop();
+        opePanels.peek().setVisible(true);
     }
 
     //表格模式

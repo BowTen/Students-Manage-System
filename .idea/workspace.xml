@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/16 做了基本信息展示界面">
+    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/17 做好了成绩查询和课程查询">
+      <change afterPath="$PROJECT_DIR$/src/com/windows/RootWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bean/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Course.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bean/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/windows/LoginStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/LoginStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/datasrc/courseData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/courseData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/datasrc/studentsData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/studentsData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/datasrc/userinfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/userinfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +94,8 @@
       <workItem from="1684147033105" duration="10061000" />
       <workItem from="1684166040220" duration="3462000" />
       <workItem from="1684220026255" duration="19964000" />
-      <workItem from="1684246798523" duration="5885000" />
+      <workItem from="1684246798523" duration="6323000" />
+      <workItem from="1684284771998" duration="10514000" />
     </task>
     <task id="LOCAL-00001" summary="第一天做了简单的登录注册界面">
       <created>1683297317186</created>
@@ -150,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684228932252</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="5/17 做好了成绩查询和课程查询">
+      <created>1684252905319</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1684252905319</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +185,8 @@
     <MESSAGE value="5/15" />
     <MESSAGE value="5/16 简单做了基础信息查询" />
     <MESSAGE value="5/16 做了基本信息展示界面" />
-    <option name="LAST_COMMIT_MESSAGE" value="5/16 做了基本信息展示界面" />
+    <MESSAGE value="5/17 做好了成绩查询和课程查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="5/17 做好了成绩查询和课程查询" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
