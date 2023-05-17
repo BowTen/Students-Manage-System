@@ -1,5 +1,7 @@
 package com.windows;
 
+import bean.Course;
+import bean.Student;
 import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
@@ -23,10 +25,10 @@ public class RootWindow extends JFrame {
     //成绩查询面板
     JPanel gradesOpePanel = new JPanel();
 
+    //开始界面
+    JPanel welcomPanel = new JPanel();
     //学生信息面板
     JPanel stuPanel = new JPanel();
-    //成绩面板
-    JPanel gradesPanel = new JPanel();
     //课程面板
     JPanel coursePanel = new JPanel();
 
@@ -73,7 +75,6 @@ public class RootWindow extends JFrame {
 
 
         initStuPanel();
-        initGradesPanel();
         initcoursePanel();
     }
 
@@ -109,7 +110,6 @@ public class RootWindow extends JFrame {
         //表格尺寸
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jTable.setRowHeight(30);
-        jTable.setPreferredSize(new Dimension(WIDTH - 70, 650));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -122,38 +122,6 @@ public class RootWindow extends JFrame {
         jScrollPane.setBounds(15, 35, WIDTH - 50, 650);
         stuPanel.add(jScrollPane);
 
-    }
-
-    //设置成绩面板
-    private void initGradesPanel() {
-        //设置大小边界
-        gradesPanel.setBounds(0, 0, WIDTH - 20, 705);
-        //设置边框
-        TitledBorder tiBorder = new TitledBorder("成绩查询");
-        tiBorder.setTitleFont(new Font(null, 1, 20));
-        gradesPanel.setBorder(tiBorder);
-        gradesPanel.setLayout(null);
-
-        //创建表格
-        JTable jTable = new JTable(rowData, headData);
-        //表格字体
-        jTable.setFont(new Font(null, 1, 20));
-        //表头字体
-        jTable.getTableHeader().setFont(new Font(null, 1, 20));
-        //表格尺寸
-        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jTable.setRowHeight(30);
-        jTable.setPreferredSize(new Dimension(WIDTH - 70, 450));
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-        for (int i = 1; i < 4; i++) {
-            jTable.getColumnModel().getColumn(i).setPreferredWidth(200);
-        }
-        //滑动窗口
-        JScrollPane jScrollPane = new JScrollPane(jTable);
-        jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 450));
-        jScrollPane.setBounds(15, 35, WIDTH - 50, 450);
-        gradesPanel.add(jScrollPane);
     }
 
     //设置课程面板
@@ -189,7 +157,6 @@ public class RootWindow extends JFrame {
         //表格尺寸
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jTable.setRowHeight(50);
-        jTable.setPreferredSize(new Dimension(WIDTH - 70, 650));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(1).setPreferredWidth(600);
         jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
@@ -240,24 +207,9 @@ public class RootWindow extends JFrame {
         });
         mainOpePanel.add(baseInfo);
 
-        JButton grades = new JButton("成绩查询");
-        grades.setFont(new Font(null, 1, 40));
-        grades.setBounds(345, 140, 225, 120);
-        grades.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //若当前正在展示基本信息界面则return
-                if (!infPanels.isEmpty() && infPanels.peek() == gradesPanel)
-                    return;
-                showDataPanel(gradesPanel);
-                System.out.println("成绩");
-            }
-        });
-        mainOpePanel.add(grades);
-
-        JButton course = new JButton("课程查询");
+        JButton course = new JButton("课程信息");
         course.setFont(new Font(null, 1, 40));
-        course.setBounds(630, 140, 225, 120);
+        course.setBounds(345, 140, 225, 120);
         course.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -270,7 +222,20 @@ public class RootWindow extends JFrame {
         });
         mainOpePanel.add(course);
 
-        JButton change = new JButton("修改信息");
+        JButton grades = new JButton("信息查询");
+        grades.setFont(new Font(null, 1, 40));
+        grades.setBounds(630, 140, 225, 120);
+        grades.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //若当前正在展示基本信息界面则return
+                changeOpePanel(gradesOpePanel);
+                System.out.println("成绩查询");
+            }
+        });
+        mainOpePanel.add(grades);
+
+        JButton change = new JButton("信息修改");
         change.setFont(new Font(null, 1, 40));
         change.setBounds(915, 140, 225, 120);
         change.addActionListener(new ActionListener() {
@@ -284,6 +249,7 @@ public class RootWindow extends JFrame {
         mainOpePanel.add(change);
     }
 
+    //切换操作面板
     private void changeOpePanel(JPanel panel) {
         //如果有则关闭之前正在展示的界面
         if (!opePanels.isEmpty()) {
@@ -298,10 +264,12 @@ public class RootWindow extends JFrame {
         //如果有则关闭之前正在展示的界面
         if (!infPanels.isEmpty()) {
             infPanels.peek().setVisible(false);
+            System.out.println(infPanels.peek().getName() + "被关闭");
             infPanels.pop();
         }
         infPanels.push(panel);
         panel.setVisible(true);
+        System.out.println(panel.getName() + "被显示");
     }
 
     //初始化菜单
@@ -362,6 +330,7 @@ public class RootWindow extends JFrame {
     //初始化面板
     private void initPanel() {
         //设置面板
+        initWelcomPanel();
         initMainOpePanel();
         initGradesOpePanel();
         consolePanel.setBounds(5, 210, WIDTH - 20, 400);
@@ -371,6 +340,7 @@ public class RootWindow extends JFrame {
         infPanel.setLayout(null);
 
         //设置子面板可见性
+        welcomPanel.setVisible(true);
         stuPanel.setVisible(false);
         coursePanel.setVisible(false);
         mainOpePanel.setVisible(true);
@@ -381,14 +351,34 @@ public class RootWindow extends JFrame {
         consolePanel.add(gradesOpePanel);
         infPanel.add(stuPanel);
         infPanel.add(coursePanel);
+        infPanel.add(welcomPanel);
 
         opePanels.push(mainOpePanel);
+        infPanels.push(welcomPanel);
 
         add(consolePanel);
         add(infPanel);
 
     }
 
+    //欢迎界面
+    private void initWelcomPanel() {
+        //设置大小边界
+        welcomPanel.setBounds(0, 0, WIDTH - 20, 705);
+        //设置边框
+        TitledBorder tiBorder = new TitledBorder("信息展示界面");
+        tiBorder.setTitleFont(new Font(null, 1, 20));
+        welcomPanel.setBorder(tiBorder);
+        welcomPanel.setLayout(null);
+
+        JLabel text = new JLabel("Welcome to the Student Management System!");
+        text.setFont(new Font(null, 0, 50));
+        text.setBounds(55, 300, WIDTH - 20, 100);
+        welcomPanel.add(text);
+
+    }
+
+    //成绩查询操作面板
     private void initGradesOpePanel() {
         //设置面板
         gradesOpePanel.setBounds(0, 0, WIDTH - 20, 400);
@@ -411,8 +401,228 @@ public class RootWindow extends JFrame {
             }
         });
         gradesOpePanel.add(back);
+
+        //按学号筛选
+        //文字
+        JLabel idSiftText = new JLabel("查询学生成绩");
+        idSiftText.setFont(new Font(null, 1, 25));
+        idSiftText.setBounds(20, 150, 200,40);
+        gradesOpePanel.add(idSiftText);
+        //文本框
+        JTextField idSifter = new JTextField();
+        idSifter.setFont(new Font(null, 1, 30));
+        idSifter.setBounds(200, 150, 400, 40);
+        gradesOpePanel.add(idSifter);
+        //筛选选项按钮
+        JRadioButton idRdButton = new JRadioButton("按学号筛选",true);
+        idRdButton.setFont(new Font(null, 1, 25));
+        idRdButton.setBounds(620, 150,200,30);
+        gradesOpePanel.add(idRdButton);
+
+        //按课程筛选
+        //文字
+        JLabel courseSiftText = new JLabel("查询课程成绩");
+        courseSiftText.setFont(new Font(null, 1, 25));
+        courseSiftText.setBounds(20, 250, 200,40);
+        gradesOpePanel.add(courseSiftText);
+        //文本框
+        JTextField courseSifter = new JTextField();
+        courseSifter.setFont(new Font(null, 1, 30));
+        courseSifter.setBounds(200, 250, 400, 40);
+        gradesOpePanel.add(courseSifter);
+        //筛选选项按钮
+        JRadioButton courseRdButton = new JRadioButton("按课程筛选",false);
+        courseRdButton.setFont(new Font(null, 1, 25));
+        courseRdButton.setBounds(620, 250,200,30);
+        gradesOpePanel.add(courseRdButton);
+
+        //按钮组
+        ButtonGroup group = new ButtonGroup();
+        group.add(idRdButton);
+        group.add(courseRdButton);
+
+        //查询按钮
+        JButton query = new JButton("查询");
+        query.setFont(new Font(null, 1, 60));
+        query.setBounds(900, 50, 200, 300);
+
+        query.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(idRdButton.isSelected()){
+                    queryById(idSifter.getText());
+                    System.out.println("查询学生");
+                }else{
+                    queryByCourse(courseSifter.getText());
+                    System.out.println("查询课程");
+                }
+            }
+        });
+        gradesOpePanel.add(query);
     }
 
+    //查询课程
+    private void queryByCourse(String courseName) {
+        //创建面板
+        JPanel courseQueryPanel = new JPanel();
+        //设置名字
+        courseQueryPanel.setName("courseQueryPanel");
+        //设置大小边界
+        courseQueryPanel.setBounds(0, 0, WIDTH - 20, 705);
+        //设置边框
+        TitledBorder tiBorder = new TitledBorder("课程信息查询");
+        tiBorder.setTitleFont(new Font(null, 1, 20));
+        courseQueryPanel.setBorder(tiBorder);
+        courseQueryPanel.setLayout(null);
+
+        Course course = new Course(courseName);
+
+        //课程名称
+        JLabel name = new JLabel(course.name == null ? "暂无信息" : course.name);
+        name.setFont(new Font(null, 1, 60));
+        name.setBounds(30, 50, 500, 60);
+        courseQueryPanel.add(name);
+        //任课教师
+        JLabel teacher = new JLabel(course.teacher == null ? "暂无信息" : course.teacher);
+        teacher.setFont(new Font(null, 1, 30));
+        teacher.setBounds(30, 120, 500, 40);
+        courseQueryPanel.add(teacher);
+        //班级人数
+        JLabel number = new JLabel("班级人数：" + course.GetNumber());
+        number.setFont(new Font(null, 0, 30));
+        number.setBounds(30, 190, 500, 30);
+        courseQueryPanel.add(number);
+
+        //成绩数据
+        int row = course.grades.size();
+        Object headData[] = {"序号", "姓名", "分数", "绩点", "排名"};
+        Object rowData[][] = course.getGradesRowData();
+
+        //成绩表格
+        JTable jTable = new JTable(rowData, headData);
+        //表格字体
+        jTable.setFont(new Font(null, 1, 20));
+        //表头字体
+        jTable.getTableHeader().setFont(new Font(null, 1, 20));
+        //表格尺寸
+        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTable.setRowHeight(30);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(110);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(110);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(110);
+
+        //滑动窗口
+        JScrollPane jScrollPane = new JScrollPane(jTable);
+        jScrollPane.setPreferredSize(new Dimension(600, 400));
+        jScrollPane.setBounds(560, 35, 600, 500);
+        courseQueryPanel.add(jScrollPane);
+
+        //平均分
+        JLabel averGrades = new JLabel("平均分：" + new Double(course.GetAverageGrades()).toString());
+        averGrades.setFont(new Font(null, 1, 30));
+        averGrades.setBounds(560, 550, 500, 40);
+        courseQueryPanel.add(averGrades);
+
+        //平均绩点
+        JLabel averPoint = new JLabel("平均绩点：" + new Double(course.GetAveragePoint()).toString());
+        averPoint.setFont(new Font(null, 1, 30));
+        averPoint.setBounds(560, 600, 500, 40);
+        courseQueryPanel.add(averPoint);
+
+        infPanel.add(courseQueryPanel);
+        showDataPanel(courseQueryPanel);
+    }
+
+    //查询学生
+    private void queryById(String id) {
+        //创建面板
+        JPanel idQueryPanel = new JPanel();
+        //设置名字
+        idQueryPanel.setName("idQueryPanel");
+        //设置大小边界
+        idQueryPanel.setBounds(0, 0, WIDTH - 20, 705);
+        //设置边框
+        TitledBorder tiBorder = new TitledBorder("学生信息查询");
+        tiBorder.setTitleFont(new Font(null, 1, 20));
+        idQueryPanel.setBorder(tiBorder);
+        idQueryPanel.setLayout(null);
+
+        //创建学生对象
+        Student student = new Student(id);
+
+        //姓名
+        JLabel name = new JLabel(student.name == null ? "暂无信息" : student.name);
+        name.setFont(new Font(null, 1, 60));
+        name.setBounds(30, 50, 500, 60);
+        idQueryPanel.add(name);
+        //学号
+        JLabel idLabel = new JLabel(student.id == null ? "暂无信息" : student.id);
+        idLabel.setFont(new Font(null, 1, 30));
+        idLabel.setBounds(30, 120, 500, 40);
+        idQueryPanel.add(idLabel);
+
+        //学院
+        JLabel acdemy = new JLabel("所在学院：" + (student.academy == null ? "暂无信息" : student.academy));
+        acdemy.setFont(new Font(null, 0, 30));
+        acdemy.setBounds(30, 190, 500, 30);
+        idQueryPanel.add(acdemy);
+        //学专业院
+        JLabel major = new JLabel("专业：" + (student.major == null ? "暂无信息" : student.major));
+        major.setFont(new Font(null, 0, 30));
+        major.setBounds(30, 230, 500, 30);
+        idQueryPanel.add(major);
+        //班级
+        JLabel _class = new JLabel("班级：" + (student._class == null ? "暂无信息" : student._class));
+        _class.setFont(new Font(null, 0, 30));
+        _class.setBounds(30, 270, 500, 30);
+        idQueryPanel.add(_class);
+
+
+        //成绩数据
+        int row = student.courses.size();
+        Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
+        Object rowData[][] = student.getGradesRowData();
+
+        //成绩表格
+        JTable jTable = new JTable(rowData, headData);
+        //表格字体
+        jTable.setFont(new Font(null, 1, 20));
+        //表头字体
+        jTable.getTableHeader().setFont(new Font(null, 1, 20));
+        //表格尺寸
+        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTable.setRowHeight(30);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(110);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(110);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(110);
+
+        //滑动窗口
+        JScrollPane jScrollPane = new JScrollPane(jTable);
+        jScrollPane.setPreferredSize(new Dimension(600, 400));
+        jScrollPane.setBounds(560, 35, 600, 500);
+        idQueryPanel.add(jScrollPane);
+
+        //平均分
+        JLabel averGrades = new JLabel("平均分：" + new Double(student.GetAverGrades()).toString());
+        averGrades.setFont(new Font(null, 1, 30));
+        averGrades.setBounds(560, 550, 500, 40);
+        idQueryPanel.add(averGrades);
+
+        //平均绩点
+        JLabel averPoint = new JLabel("平均绩点：" + new Double(student.GetAverPoint()).toString());
+        averPoint.setFont(new Font(null, 1, 30));
+        averPoint.setBounds(560, 600, 500, 40);
+        idQueryPanel.add(averPoint);
+
+        infPanel.add(idQueryPanel);
+        showDataPanel(idQueryPanel);
+    }
+
+    //操作面板返回
     private void opePanelBack() {
         opePanels.peek().setVisible(false);
         opePanels.pop();

@@ -1,8 +1,6 @@
 package com.windows;
 
-import bean.Course;
 import bean.Student;
-import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -12,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Stack;
 
 public class MainWindow extends JFrame {
@@ -21,6 +18,8 @@ public class MainWindow extends JFrame {
     //信息面板
     JPanel infPanel = new JPanel();
 
+    //开始界面
+    JPanel welcomPanel = new JPanel();
     //主操作面板
     JPanel mainOpePanel = new JPanel();
     //基本信息面板
@@ -60,34 +59,7 @@ public class MainWindow extends JFrame {
     //初始化数据
     private void initData(String id) {
         //初始化学生信息
-        List<String> stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
-        for (String s : stuData) {
-            if (s.split("&")[0].equals(id)) {
-                String tmp[] = s.split("&");
-                curUser = new Student(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]);
-                String courses[] = tmp[5].split("#");
-                //初始化学生课程
-                List<String> allCourse = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
-                for (String cours : courses) {
-                    for (String s1 : allCourse) {
-                        if (s1.contains(cours)) {
-                            String[] split = s1.split("&");
-                            Course course = new Course(split[0], split[1]);
-                            String[] students = split[2].split("#");
-                            for (String student : students) {
-                                String[] nameAndgrades = student.split("@");
-                                course.students.put(nameAndgrades[0], Double.parseDouble(nameAndgrades[1]));
-                            }
-                            course.InitGrades();
-                            curUser.courses.add(course);
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-
-        }
+        curUser = new Student(id);
 
         if(curUser == null)
             curUser = new Student();
@@ -120,6 +92,22 @@ public class MainWindow extends JFrame {
         initBaseInfPanel();
         initGradesPanel();
         initcoursePanel();
+    }
+
+    //欢迎界面
+    private void initWelcomPanel() {
+        //设置大小边界
+        welcomPanel.setBounds(0, 0, WIDTH - 20, 705);
+        //设置边框
+        TitledBorder tiBorder = new TitledBorder("信息展示界面");
+        tiBorder.setTitleFont(new Font(null, 1, 20));
+        welcomPanel.setBorder(tiBorder);
+        welcomPanel.setLayout(null);
+
+        JLabel text = new JLabel("Welcome to the Student Management System!");
+        text.setFont(new Font(null, 0, 50));
+        text.setBounds(55, 300, WIDTH - 20, 100);
+        welcomPanel.add(text);
     }
 
     //设置基础信息面板
@@ -176,16 +164,15 @@ public class MainWindow extends JFrame {
         //表格字体
         jTable.setFont(new Font(null, 1, 20));
         //表头字体
-        jTable.getTableHeader().setFont(new Font(null, 1, 20));
+        jTable.getTableHeader().setFont(new Font(null, 1, 30));
         //表格尺寸
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jTable.setRowHeight(30);
-        jTable.setPreferredSize(new Dimension(WIDTH - 70, 450));
+        jTable.setRowHeight(40);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(80);
-        for (int i = 1; i < 4; i++) {
-            jTable.getColumnModel().getColumn(i).setPreferredWidth(200);
-        }
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(330);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(220);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(200);
         //滑动窗口
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 450));
@@ -234,11 +221,9 @@ public class MainWindow extends JFrame {
         //表格尺寸
         jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jTable.setRowHeight(50);
-        jTable.setPreferredSize(new Dimension(WIDTH - 70, 650));
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        for (int i = 1; i < 3; i++) {
-            jTable.getColumnModel().getColumn(i).setPreferredWidth(400);
-        }
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(530);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(500);
         //滑动窗口
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(WIDTH - 50, 650));
@@ -389,19 +374,24 @@ public class MainWindow extends JFrame {
     //初始化面板
     private void initPanel() {
         //设置面板
+        initWelcomPanel();
         consolePanel.setBounds(5, 210, WIDTH - 20, 400);
         infPanel.setBounds(5, 610, WIDTH - 20, 705);
         //设置默认布局
         consolePanel.setLayout(null);
         infPanel.setLayout(null);
 
+        welcomPanel.setVisible(true);
         gradesPanel.setVisible(false);
         baseInfPanel.setVisible(false);
         coursePanel.setVisible(false);
 
+        infPanel.add(welcomPanel);
         infPanel.add(gradesPanel);
         infPanel.add(baseInfPanel);
         infPanel.add(coursePanel);
+
+        infPanels.push(welcomPanel);
 
         add(consolePanel);
         add(infPanel);

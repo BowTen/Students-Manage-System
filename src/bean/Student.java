@@ -1,7 +1,10 @@
 package bean;
 
+import cn.hutool.core.io.FileUtil;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Student{
     private String passWord = null;
@@ -28,6 +31,28 @@ public class Student{
         this._class = _class;
     }
 
+    //构造方法
+    public Student(String id){
+        //读取数据
+        List<String> stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
+        for (String s : stuData) {
+            if (s.split("&")[0].equals(id)) {
+                String tmp[] = s.split("&");
+                this.id = tmp[0];
+                name = tmp[1];
+                academy = tmp[2];
+                major = tmp[3];
+                _class = tmp[4];
+                String coursesData[] = tmp[5].split("#");
+                //初始化课程
+                List<String> allCourse = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
+                for (String cours : coursesData) {
+                    courses.add(new Course(cours));
+                }
+                break;
+            }
+        }
+    }
 
     //默认构造
     public Student() {
@@ -37,6 +62,20 @@ public class Student{
     public Student(String id, String passWord) {
         this.id = id;
         this.passWord = passWord;
+    }
+
+    //获取成绩表格行数据
+    public Object[][] getGradesRowData(){
+        int row = courses.size();
+        Object[][] rowData = new Object[row][5];
+        for (int i = 0; i < row; i++) {
+            rowData[i][0] = i + 1;
+            rowData[i][1] = courses.get(i).name;
+            rowData[i][2] = courses.get(i).GetGrades(name);
+            rowData[i][3] = courses.get(i).GetPoint(name);
+            rowData[i][4] = courses.get(i).GetRank(name);
+        }
+        return rowData;
     }
 
     //获取平均分

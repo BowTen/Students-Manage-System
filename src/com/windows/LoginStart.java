@@ -113,15 +113,13 @@ public class LoginStart extends JFrame implements ActionListener {
         //设置居中
         setLocationRelativeTo(null);
         //设置关闭模式
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //大小不可变
         setResizable(false);
         //取消默认居中方式
         setLayout(null);
         //设置大小不可变
         setResizable(false);
-        //设置总是置顶
-        setAlwaysOnTop(true);
     }
 
     @Override
@@ -139,9 +137,9 @@ public class LoginStart extends JFrame implements ActionListener {
                 return;
             }
             if(allUsers.contains(new Student(identityInput,passwordInput))){
-//                if(identityInput.equals("root"))
-//                    new RootWindow();
-//                else
+                if(identityInput.equals("root"))
+                    new RootWindow();
+                else
                     new MainWindow(identityInput);
                 setVisible(false);
                 return;
