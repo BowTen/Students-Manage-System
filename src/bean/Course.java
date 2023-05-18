@@ -13,6 +13,12 @@ public class Course {
     public Map<String, Double> students = new HashMap<String,Double>();
     public ArrayList<Double> grades = new ArrayList<Double>();
 
+    //排序参数
+    //升序
+    public static final int GREATER = 1;
+    //降序
+    public static final int LESS = 0;
+
     //构造方法
     public Course(String name, String teacher) {
         this.name = name;
@@ -85,18 +91,59 @@ public class Course {
     }
 
     //获取成绩表行数据
-    public Object[][] getGradesRowData(){
+    public Object[][] getGradesRowData(int sortPara){
         int row = grades.size();
         Object[][] rowData = new Object[row][5];
         int id = 0;
         for (Map.Entry<String, Double> entry : students.entrySet()) {
-            rowData[id][0] = id+1;
             rowData[id][1] = entry.getKey();
             rowData[id][2] = entry.getValue();
             rowData[id][3] = GetPoint(entry.getKey());
             rowData[id][4] = GetRank(entry.getKey());
             id++;
         }
+
+        if(sortPara == 1)
+            greaterSort(rowData);
+        else
+            lessSort(rowData);
+
+        for (int i = 0; i < row; i++) {
+            rowData[i][0] = i + 1;
+        }
+
         return rowData;
     }
+
+    private void lessSort(Object[][] rowData) {
+        Arrays.sort(rowData, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                Double e1 = new Double(o1[2].toString());
+                Double e2 = new Double(o2[2].toString());
+                if(e1 > e2)
+                    return -1;
+                else if(e1 == e2)
+                    return 0;
+                return 1;
+            }
+        });
+    }
+
+    private void greaterSort(Object[][] rowData) {
+        Arrays.sort(rowData, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                Double e1 = new Double(o1[2].toString());
+                Double e2 = new Double(o2[2].toString());
+                if(e1 < e2)
+                    return -1;
+                else if(e1 == e2)
+                    return 0;
+                return 1;
+            }
+        });
+    }
+
+
 }

@@ -6,7 +6,6 @@ import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -109,6 +108,8 @@ public class RootWindow extends JFrame {
 
         //创建表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 20));
         //表头字体
@@ -156,6 +157,8 @@ public class RootWindow extends JFrame {
 
         //创建表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 40));
         //表头字体
@@ -460,18 +463,36 @@ public class RootWindow extends JFrame {
         group.add(idRdButton);
         group.add(courseRdButton);
 
+
+        //升序选项按钮
+        JRadioButton greaterSortButton = new JRadioButton("升序",true);
+        greaterSortButton.setFont(new Font(null, 1, 25));
+        greaterSortButton.setBounds(900, 280,200,30);
+        infoQueryPanel.add(greaterSortButton);
+
+        //降序选项按钮
+        JRadioButton lessSortBoutton = new JRadioButton("降序",false);
+        lessSortBoutton.setFont(new Font(null, 1, 25));
+        lessSortBoutton.setBounds(900, 330,200,30);
+        infoQueryPanel.add(lessSortBoutton);
+
+        //按钮组
+        ButtonGroup group1 = new ButtonGroup();
+        group1.add(greaterSortButton);
+        group1.add(lessSortBoutton);
+
         //查询按钮
         JButton query = new JButton("查询");
         query.setFont(new Font(null, 1, 60));
-        query.setBounds(900, 50, 200, 300);
+        query.setBounds(900, 50, 200, 200);
         query.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(idRdButton.isSelected()){
-                    queryById(idSifter.getText());
+                    queryById(idSifter.getText(), greaterSortButton.isSelected() ? Student.GREATER : Student.LESS);
                     System.out.println("查询学生");
                 }else{
-                    queryByCourse(courseSifter.getText());
+                    queryByCourse(courseSifter.getText(), greaterSortButton.isSelected() ? Course.GREATER : Course.LESS);
                     System.out.println("查询课程");
                 }
             }
@@ -557,7 +578,7 @@ public class RootWindow extends JFrame {
     }
 
     //查询课程
-    private void queryByCourse(String courseName) {
+    private void queryByCourse(String courseName, int sortPara) {
         //创建面板
         JPanel courseQueryPanel = new JPanel();
         //设置名字
@@ -591,10 +612,12 @@ public class RootWindow extends JFrame {
         //成绩数据
         int row = course.grades.size();
         Object headData[] = {"序号", "姓名", "分数", "绩点", "排名"};
-        Object rowData[][] = course.getGradesRowData();
+        Object rowData[][] = course.getGradesRowData(sortPara);
 
         //成绩表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 20));
         //表头字体
@@ -631,7 +654,7 @@ public class RootWindow extends JFrame {
     }
 
     //查询学生
-    private void queryById(String id) {
+    private void queryById(String id, int sortPara) {
         //创建面板
         JPanel idQueryPanel = new JPanel();
         //设置名字
@@ -678,10 +701,12 @@ public class RootWindow extends JFrame {
         //成绩数据
         int row = student.courses.size();
         Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
-        Object rowData[][] = student.getGradesRowData();
+        Object rowData[][] = student.getGradesRowData(sortPara);
 
         //成绩表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 20));
         //表头字体
@@ -722,24 +747,5 @@ public class RootWindow extends JFrame {
         opePanels.peek().setVisible(false);
         opePanels.pop();
         opePanels.peek().setVisible(true);
-    }
-
-    //表格模式
-    private class MyTableModel extends AbstractTableModel {
-
-        @Override
-        public int getRowCount() {
-            return rowData.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return headData.length;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            return rowData[rowIndex][columnIndex];
-        }
     }
 }

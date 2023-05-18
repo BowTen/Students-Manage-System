@@ -5,12 +5,10 @@ import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
@@ -69,26 +67,27 @@ public class MainWindow extends JFrame {
         //初始化学生信息
         curUser = new Student(id);
 
-        if (curUser == null)
-            curUser = new Student();
-        int row = curUser.courses.size();
-        rowData = new Object[row][5];
-        for (int i = 0; i < row; i++) {
-            rowData[i][0] = i + 1;
-            rowData[i][1] = curUser.courses.get(i).name;
-            Double grades = curUser.courses.get(i).GetGrades(curUser.name);
-            if (grades == null) {
-                rowData[i][2] = "暂无数据";
-                rowData[i][3] = "暂无数据";
-                rowData[i][4] = "暂无数据";
-            } else {
-                //计算绩点并保留两位小数
-                Double point = new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2, BigDecimal.ROUND_UP).doubleValue();
-                rowData[i][2] = grades;
-                rowData[i][3] = point;
-                rowData[i][4] = curUser.courses.get(i).GetRank(curUser.name);
-            }
-        }
+        rowData = curUser.getGradesRowData(Student.LESS);
+//        if (curUser == null)
+//            curUser = new Student();
+//        int row = curUser.courses.size();
+//        rowData = new Object[row][5];
+//        for (int i = 0; i < row; i++) {
+//            rowData[i][0] = i + 1;
+//            rowData[i][1] = curUser.courses.get(i).name;
+//            Double grades = curUser.courses.get(i).GetGrades(curUser.name);
+//            if (grades == null) {
+//                rowData[i][2] = "暂无数据";
+//                rowData[i][3] = "暂无数据";
+//                rowData[i][4] = "暂无数据";
+//            } else {
+//                //计算绩点并保留两位小数
+//                Double point = new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2, BigDecimal.ROUND_UP).doubleValue();
+//                rowData[i][2] = grades;
+//                rowData[i][3] = point;
+//                rowData[i][4] = curUser.courses.get(i).GetRank(curUser.name);
+//            }
+//        }
 
         if (curUser == null)
             curUser = new Student(null, null, null, null, null);
@@ -169,6 +168,8 @@ public class MainWindow extends JFrame {
 
         //创建表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 20));
         //表头字体
@@ -222,6 +223,8 @@ public class MainWindow extends JFrame {
 
         //创建表格
         JTable jTable = new JTable(rowData, headData);
+        //设置不可选中
+        jTable.setEnabled(false);
         //表格字体
         jTable.setFont(new Font(null, 1, 40));
         //表头字体
@@ -510,6 +513,9 @@ public class MainWindow extends JFrame {
                                 FileUtil.writeUtf8Lines(utf8Lines, userDataPath);
                                 JOptionPane.showMessageDialog(null,"修改成功！");
                                 opePanelBack();
+                                oldPasswdInput.setText("");
+                                newPasswdInput.setText("");
+                                newPasswdComfirmInput.setText("");
                                 System.out.println("修改成功");
                                 break;
                             }
@@ -550,24 +556,5 @@ public class MainWindow extends JFrame {
         }
         opePanels.push(panel);
         panel.setVisible(true);
-    }
-
-    //表格模式
-    private class MyTabelModel extends AbstractTableModel {
-
-        @Override
-        public int getRowCount() {
-            return rowData.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return headData.length;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            return rowData[rowIndex][columnIndex];
-        }
     }
 }

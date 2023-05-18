@@ -4,11 +4,12 @@ import cn.hutool.core.io.FileUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Student{
     private String passWord = null;
-
     //学号
     public String id = null;
     //姓名
@@ -19,8 +20,14 @@ public class Student{
     public String major = null;
     //班级
     public String _class = null;
-
+    //课程
     public ArrayList<Course> courses = new ArrayList<Course>();
+
+    //排序参数
+    //升序
+    public static final int GREATER = 1;
+    //降序
+    public static final int LESS = 0;
 
     //构造方法
     public Student(String id, String name, String academy, String major, String _class) {
@@ -54,28 +61,66 @@ public class Student{
         }
     }
 
+    public Student(String id, String passWord) {
+        this.passWord = passWord;
+        this.id = id;
+    }
+
     //默认构造
     public Student() {
     }
 
-    //有参构造
-    public Student(String id, String passWord) {
-        this.id = id;
-        this.passWord = passWord;
-    }
-
     //获取成绩表格行数据
-    public Object[][] getGradesRowData(){
+    public Object[][] getGradesRowData(int sortPara){
         int row = courses.size();
         Object[][] rowData = new Object[row][5];
         for (int i = 0; i < row; i++) {
-            rowData[i][0] = i + 1;
             rowData[i][1] = courses.get(i).name;
             rowData[i][2] = courses.get(i).GetGrades(name);
             rowData[i][3] = courses.get(i).GetPoint(name);
             rowData[i][4] = courses.get(i).GetRank(name);
         }
+
+        if(sortPara == 1)
+            greaterSort(rowData);
+        else
+            lessSort(rowData);
+
+        for (int i = 0; i < row; i++) {
+            rowData[i][0] = i + 1;
+        }
+
         return rowData;
+    }
+
+    private void lessSort(Object[][] rowData) {
+        Arrays.sort(rowData, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                Double e1 = new Double(o1[2].toString());
+                Double e2 = new Double(o2[2].toString());
+                if(e1 > e2)
+                    return -1;
+                else if(e1 == e2)
+                    return 0;
+                return 1;
+            }
+        });
+    }
+
+    private void greaterSort(Object[][] rowData) {
+        Arrays.sort(rowData, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                Double e1 = new Double(o1[2].toString());
+                Double e2 = new Double(o2[2].toString());
+                if(e1 < e2)
+                    return -1;
+                else if(e1 == e2)
+                    return 0;
+                return 1;
+            }
+        });
     }
 
     //获取平均分
