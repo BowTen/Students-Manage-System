@@ -22,8 +22,14 @@ public class RootWindow extends JFrame {
 
     //主操作面板
     JPanel mainOpePanel = new JPanel();
-    //成绩查询面板
-    JPanel gradesOpePanel = new JPanel();
+    //信息查询面板
+    JPanel infoQueryPanel = new JPanel();
+    //信息查询面板
+    JPanel infoModifyPanel = new JPanel();
+    //添加学生面板
+    JPanel addStudentPanel = new JPanel();
+    //添加课程面板
+    JPanel addCoursePanel = new JPanel();
 
     //开始界面
     JPanel welcomPanel = new JPanel();
@@ -191,10 +197,11 @@ public class RootWindow extends JFrame {
         mainOpePanel.setBorder(consoleBorder);
         mainOpePanel.setLayout(null);
 
-        //功能：基本信息，成绩查询，课程查询，修改信息
+        //查看所有学生信息
         JButton baseInfo = new JButton("学生信息");
         baseInfo.setFont(new Font(null, 1, 40));
-        baseInfo.setBounds(60, 140, 225, 120);
+//        baseInfo.setBounds(60, 140, 225, 120);
+        baseInfo.setBounds(60, 140, 300, 120);
         baseInfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -207,9 +214,11 @@ public class RootWindow extends JFrame {
         });
         mainOpePanel.add(baseInfo);
 
+        //查看所有课程信息
         JButton course = new JButton("课程信息");
         course.setFont(new Font(null, 1, 40));
-        course.setBounds(345, 140, 225, 120);
+//        course.setBounds(345, 140, 225, 120);
+        course.setBounds(440, 140, 300, 120);
         course.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,31 +231,34 @@ public class RootWindow extends JFrame {
         });
         mainOpePanel.add(course);
 
+        //信息检索
         JButton grades = new JButton("信息查询");
         grades.setFont(new Font(null, 1, 40));
-        grades.setBounds(630, 140, 225, 120);
+//        grades.setBounds(630, 140, 225, 120);
+        grades.setBounds(820, 140, 300, 120);
         grades.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //若当前正在展示基本信息界面则return
-                changeOpePanel(gradesOpePanel);
+                changeOpePanel(infoQueryPanel);
                 System.out.println("成绩查询");
             }
         });
         mainOpePanel.add(grades);
 
-        JButton change = new JButton("信息修改");
-        change.setFont(new Font(null, 1, 40));
-        change.setBounds(915, 140, 225, 120);
-        change.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //若当前正在展示基本信息界面则return
-                changeOpePanel(gradesOpePanel);
-                System.out.println("修改信息");
-            }
-        });
-        mainOpePanel.add(change);
+        //信息修改
+//        JButton change = new JButton("信息修改");
+//        change.setFont(new Font(null, 1, 40));
+//        change.setBounds(915, 140, 225, 120);
+//        change.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //若当前正在展示基本信息界面则return
+//                changeOpePanel(infoModifyPanel);
+//                System.out.println("修改信息");
+//            }
+//        });
+//        mainOpePanel.add(change);
     }
 
     //切换操作面板
@@ -332,7 +344,9 @@ public class RootWindow extends JFrame {
         //设置面板
         initWelcomPanel();
         initMainOpePanel();
-        initGradesOpePanel();
+        initInfoQueryPanel();
+        initInfoModifyPanel();
+        initAddStudentPanel();
         consolePanel.setBounds(5, 210, WIDTH - 20, 400);
         infPanel.setBounds(5, 610, WIDTH - 20, 705);
         //设置默认布局
@@ -343,22 +357,28 @@ public class RootWindow extends JFrame {
         welcomPanel.setVisible(true);
         stuPanel.setVisible(false);
         coursePanel.setVisible(false);
+
         mainOpePanel.setVisible(true);
-        gradesOpePanel.setVisible(false);
+        infoQueryPanel.setVisible(false);
+        infoModifyPanel.setVisible(false);
+        addStudentPanel.setVisible(false);
 
         //添加子面板
         consolePanel.add(mainOpePanel);
-        consolePanel.add(gradesOpePanel);
+        consolePanel.add(infoQueryPanel);
+        consolePanel.add(infoModifyPanel);
+        consolePanel.add(addStudentPanel);
+
         infPanel.add(stuPanel);
         infPanel.add(coursePanel);
         infPanel.add(welcomPanel);
+
 
         opePanels.push(mainOpePanel);
         infPanels.push(welcomPanel);
 
         add(consolePanel);
         add(infPanel);
-
     }
 
     //欢迎界面
@@ -378,15 +398,15 @@ public class RootWindow extends JFrame {
 
     }
 
-    //成绩查询操作面板
-    private void initGradesOpePanel() {
+    //初始化信息查询面板
+    private void initInfoQueryPanel() {
         //设置面板
-        gradesOpePanel.setBounds(0, 0, WIDTH - 20, 400);
+        infoQueryPanel.setBounds(0, 0, WIDTH - 20, 400);
         //面板边框
-        TitledBorder titledBorder = new TitledBorder("成绩查询");
+        TitledBorder titledBorder = new TitledBorder("信息查询");
         titledBorder.setTitleFont(new Font(null, 1, 20));
-        gradesOpePanel.setBorder(titledBorder);
-        gradesOpePanel.setLayout(null);
+        infoQueryPanel.setBorder(titledBorder);
+        infoQueryPanel.setLayout(null);
 
         //返回按钮
         JButton back = new JButton("返回");
@@ -395,46 +415,45 @@ public class RootWindow extends JFrame {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //若当前正在展示基本信息界面则return
                 opePanelBack();
                 System.out.println("返回");
             }
         });
-        gradesOpePanel.add(back);
+        infoQueryPanel.add(back);
 
         //按学号筛选
         //文字
         JLabel idSiftText = new JLabel("查询学生成绩");
         idSiftText.setFont(new Font(null, 1, 25));
         idSiftText.setBounds(20, 150, 200,40);
-        gradesOpePanel.add(idSiftText);
+        infoQueryPanel.add(idSiftText);
         //文本框
         JTextField idSifter = new JTextField();
         idSifter.setFont(new Font(null, 1, 30));
         idSifter.setBounds(200, 150, 400, 40);
-        gradesOpePanel.add(idSifter);
+        infoQueryPanel.add(idSifter);
         //筛选选项按钮
         JRadioButton idRdButton = new JRadioButton("按学号筛选",true);
         idRdButton.setFont(new Font(null, 1, 25));
         idRdButton.setBounds(620, 150,200,30);
-        gradesOpePanel.add(idRdButton);
+        infoQueryPanel.add(idRdButton);
 
         //按课程筛选
         //文字
         JLabel courseSiftText = new JLabel("查询课程成绩");
         courseSiftText.setFont(new Font(null, 1, 25));
         courseSiftText.setBounds(20, 250, 200,40);
-        gradesOpePanel.add(courseSiftText);
+        infoQueryPanel.add(courseSiftText);
         //文本框
         JTextField courseSifter = new JTextField();
         courseSifter.setFont(new Font(null, 1, 30));
         courseSifter.setBounds(200, 250, 400, 40);
-        gradesOpePanel.add(courseSifter);
+        infoQueryPanel.add(courseSifter);
         //筛选选项按钮
         JRadioButton courseRdButton = new JRadioButton("按课程筛选",false);
         courseRdButton.setFont(new Font(null, 1, 25));
         courseRdButton.setBounds(620, 250,200,30);
-        gradesOpePanel.add(courseRdButton);
+        infoQueryPanel.add(courseRdButton);
 
         //按钮组
         ButtonGroup group = new ButtonGroup();
@@ -445,7 +464,6 @@ public class RootWindow extends JFrame {
         JButton query = new JButton("查询");
         query.setFont(new Font(null, 1, 60));
         query.setBounds(900, 50, 200, 300);
-
         query.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -458,7 +476,84 @@ public class RootWindow extends JFrame {
                 }
             }
         });
-        gradesOpePanel.add(query);
+        infoQueryPanel.add(query);
+    }
+
+    //初始化信息修改面板
+    private void initInfoModifyPanel() {
+        //设置面板
+        infoModifyPanel.setBounds(0, 0, WIDTH - 20, 400);
+        //面板边框
+        TitledBorder titledBorder = new TitledBorder("信息修改");
+        titledBorder.setTitleFont(new Font(null, 1, 20));
+        infoModifyPanel.setBorder(titledBorder);
+        infoModifyPanel.setLayout(null);
+
+        //返回按钮
+        JButton back = new JButton("返回");
+        back.setFont(new Font(null, 1, 30));
+        back.setBounds(40, 40, 100, 50);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                opePanelBack();
+                System.out.println("返回");
+            }
+        });
+        infoModifyPanel.add(back);
+
+        //添加学生按钮
+        JButton addStudent = new JButton("添加学生");
+        addStudent.setFont(new Font(null, 1, 50));
+        addStudent.setBounds(120, 180, 400, 80);
+        addStudent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeOpePanel(addStudentPanel);
+                System.out.println("添加学生");
+            }
+        });
+        infoModifyPanel.add(addStudent);
+
+        //返回按钮
+        JButton addCourse = new JButton("添加课程");
+        addCourse.setFont(new Font(null, 1, 50));
+        addCourse.setBounds(640, 180, 400, 80);
+        addCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeOpePanel(addCoursePanel);
+                System.out.println("添加课程");
+            }
+        });
+        infoModifyPanel.add(addCourse);
+
+    }
+
+    //初始化添加学生面板
+    private void initAddStudentPanel() {
+        //设置面板
+        addStudentPanel.setBounds(0, 0, WIDTH - 20, 400);
+        //面板边框
+        TitledBorder titledBorder = new TitledBorder("添加学生");
+        titledBorder.setTitleFont(new Font(null, 1, 20));
+        addStudentPanel.setBorder(titledBorder);
+        addStudentPanel.setLayout(null);
+
+        //返回按钮
+        JButton back = new JButton("返回");
+        back.setFont(new Font(null, 1, 30));
+        back.setBounds(40, 40, 100, 50);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                opePanelBack();
+                System.out.println("返回");
+            }
+        });
+        addStudentPanel.add(back);
+
+
     }
 
     //查询课程
@@ -630,7 +725,7 @@ public class RootWindow extends JFrame {
     }
 
     //表格模式
-    private class MyTabelModel extends AbstractTableModel {
+    private class MyTableModel extends AbstractTableModel {
 
         @Override
         public int getRowCount() {

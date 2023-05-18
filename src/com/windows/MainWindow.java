@@ -1,6 +1,7 @@
 package com.windows;
 
 import bean.Student;
+import cn.hutool.core.io.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Stack;
 
 public class MainWindow extends JFrame {
@@ -22,6 +24,9 @@ public class MainWindow extends JFrame {
     JPanel welcomPanel = new JPanel();
     //主操作面板
     JPanel mainOpePanel = new JPanel();
+    //修改密码面板
+    JPanel editPasswdPanel = new JPanel();
+
     //基本信息面板
     JPanel baseInfPanel = new JPanel();
     //成绩面板
@@ -36,6 +41,9 @@ public class MainWindow extends JFrame {
     //边框
     TitledBorder consoleBorder = new TitledBorder("操作区");
     TitledBorder infBorder = new TitledBorder("信息展示区");
+
+    //用户信息文件地址
+    public String userDataPath = "D:\\Codes\\Students Management System\\src\\datasrc\\userinfo.txt";
 
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
@@ -61,7 +69,7 @@ public class MainWindow extends JFrame {
         //初始化学生信息
         curUser = new Student(id);
 
-        if(curUser == null)
+        if (curUser == null)
             curUser = new Student();
         int row = curUser.courses.size();
         rowData = new Object[row][5];
@@ -243,11 +251,10 @@ public class MainWindow extends JFrame {
         initMenu();
         initImage();
         initPanel();
-        initConsole();
     }
 
     //初始化操作台
-    private void initConsole() {
+    private void initMainOpePanel() {
         opePanels.push(mainOpePanel);
 
         //设置面板
@@ -301,8 +308,6 @@ public class MainWindow extends JFrame {
             }
         });
         mainOpePanel.add(course);
-
-        consolePanel.add(mainOpePanel);
     }
 
     //展示界面
@@ -322,11 +327,13 @@ public class MainWindow extends JFrame {
         JMenu menu = new JMenu("选项");
         JMenuItem exit = new JMenuItem("退出系统");
         JMenuItem reLogin = new JMenuItem("重新登录");
+        JMenuItem editPasswd = new JMenuItem("修改密码");
 
         menuBar.setPreferredSize(new Dimension(WIDTH, 35));
         menu.setFont(new Font(null, 1, 20));
         exit.setFont(new Font(null, 1, 20));
         reLogin.setFont(new Font(null, 1, 20));
+        editPasswd.setFont(new Font(null, 1, 20));
 
         //退出系统
         exit.addActionListener(new ActionListener() {
@@ -349,8 +356,18 @@ public class MainWindow extends JFrame {
             }
         });
 
+        //修改密码
+        editPasswd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeOpePanel(editPasswdPanel);
+                System.out.println("修改密码");
+            }
+        });
+
         menu.add(exit);
         menu.add(reLogin);
+        menu.add(editPasswd);
         menuBar.add(menu);
         setJMenuBar(menuBar);
     }
@@ -374,27 +391,165 @@ public class MainWindow extends JFrame {
     //初始化面板
     private void initPanel() {
         //设置面板
+        initMainOpePanel();
         initWelcomPanel();
+        initEditPasswdPanel();
         consolePanel.setBounds(5, 210, WIDTH - 20, 400);
         infPanel.setBounds(5, 610, WIDTH - 20, 705);
         //设置默认布局
         consolePanel.setLayout(null);
         infPanel.setLayout(null);
 
+        mainOpePanel.setVisible(true);
+        editPasswdPanel.setVisible(false);
+
         welcomPanel.setVisible(true);
         gradesPanel.setVisible(false);
         baseInfPanel.setVisible(false);
         coursePanel.setVisible(false);
+
+        consolePanel.add(mainOpePanel);
+        consolePanel.add(editPasswdPanel);
 
         infPanel.add(welcomPanel);
         infPanel.add(gradesPanel);
         infPanel.add(baseInfPanel);
         infPanel.add(coursePanel);
 
+        opePanels.push(mainOpePanel);
+
         infPanels.push(welcomPanel);
 
         add(consolePanel);
         add(infPanel);
+    }
+
+    //初始化修改密码面板
+    private void initEditPasswdPanel() {
+        //设置面板
+        editPasswdPanel.setBounds(0, 0, WIDTH - 20, 400);
+        //面板边框
+        TitledBorder titledBorder = new TitledBorder("修改密码");
+        titledBorder.setTitleFont(new Font(null, 1, 20));
+        editPasswdPanel.setBorder(titledBorder);
+        editPasswdPanel.setLayout(null);
+
+        //返回按钮
+        JButton back = new JButton("返回");
+        back.setFont(new Font(null, 1, 30));
+        back.setBounds(40, 40, 100, 50);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                opePanelBack();
+                System.out.println("返回");
+            }
+        });
+        editPasswdPanel.add(back);
+
+        //旧密码
+        JLabel oldPasswdText = new JLabel("旧密码");
+        oldPasswdText.setFont(new Font(null, 1, 25));
+        oldPasswdText.setBounds(20, 150, 200, 40);
+        editPasswdPanel.add(oldPasswdText);
+        //密码框
+        JPasswordField oldPasswdInput = new JPasswordField();
+        oldPasswdInput.setFont(new Font(null, 1, 30));
+        oldPasswdInput.setBounds(200, 150, 500, 40);
+        editPasswdPanel.add(oldPasswdInput);
+
+        //新密码
+        JLabel newPasswdText = new JLabel("新密码");
+        newPasswdText.setFont(new Font(null, 1, 25));
+        newPasswdText.setBounds(20, 220, 200, 40);
+        editPasswdPanel.add(newPasswdText);
+        //密码框
+        JPasswordField newPasswdInput = new JPasswordField();
+        newPasswdInput.setFont(new Font(null, 1, 30));
+        newPasswdInput.setBounds(200, 220, 500, 40);
+        editPasswdPanel.add(newPasswdInput);
+
+        //确认新密码
+        JLabel newPasswdComfirmText = new JLabel("确认新密码");
+        newPasswdComfirmText.setFont(new Font(null, 1, 25));
+        newPasswdComfirmText.setBounds(20, 290, 200, 40);
+        editPasswdPanel.add(newPasswdComfirmText);
+        //密码框
+        JPasswordField newPasswdComfirmInput = new JPasswordField();
+        newPasswdComfirmInput.setFont(new Font(null, 1, 30));
+        newPasswdComfirmInput.setBounds(200, 290, 500, 40);
+        editPasswdPanel.add(newPasswdComfirmInput);
+
+        //修改按钮
+        JButton edit = new JButton("修改");
+        edit.setFont(new Font(null, 1, 60));
+        edit.setBounds(900, 50, 200, 300);
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(oldPasswdInput.getPassword().length == 0){
+                    JOptionPane.showMessageDialog(null,"请输入旧密码");
+                    return;
+                }else if(newPasswdInput.getPassword().length == 0){
+                    JOptionPane.showMessageDialog(null,"请输入新密码");
+                    return;
+                }else if(newPasswdComfirmInput.getPassword().length == 0){
+                    JOptionPane.showMessageDialog(null,"请确认新密码");
+                    return;
+                }
+                if(checkOldPasswd(new String(oldPasswdInput.getPassword()))){
+                    if(new String(newPasswdInput.getPassword()).equals(new String(newPasswdComfirmInput.getPassword()))){
+                        if(new String(newPasswdInput.getPassword()).equals(new String(oldPasswdInput.getPassword()))){
+                            JOptionPane.showMessageDialog(null,"新密码不能与旧密码相同");
+                            return;
+                        }
+                        List<String> utf8Lines = FileUtil.readUtf8Lines(userDataPath);
+                        for (int i = 0; i < utf8Lines.size(); i++) {
+                            if(utf8Lines.get(i).split("&")[0].equals(curUser.id)){
+                                utf8Lines.set(i, curUser.id + "&" + new String(newPasswdInput.getPassword()));
+                                FileUtil.writeUtf8Lines(utf8Lines, userDataPath);
+                                JOptionPane.showMessageDialog(null,"修改成功！");
+                                opePanelBack();
+                                System.out.println("修改成功");
+                                break;
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"请确认新密码");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"旧密码错误");
+                }
+                    System.out.println("修改");
+            }
+
+            private boolean checkOldPasswd(String password) {
+                for (String readUtf8Line : FileUtil.readUtf8Lines(userDataPath)) {
+                    if(readUtf8Line.split("&")[0].equals(curUser.id)){
+                        return password.equals(readUtf8Line.split("&")[1]);
+                    }
+                }
+                return false;
+            }
+        });
+        editPasswdPanel.add(edit);
+    }
+
+    //返回上级操作面板
+    private void opePanelBack() {
+        opePanels.peek().setVisible(false);
+        opePanels.pop();
+        opePanels.peek().setVisible(true);
+    }
+
+    //切换操作面板
+    private void changeOpePanel(JPanel panel) {
+        //如果有则关闭之前正在展示的界面
+        if (!opePanels.isEmpty()) {
+            opePanels.peek().setVisible(false);
+        }
+        opePanels.push(panel);
+        panel.setVisible(true);
     }
 
     //表格模式
