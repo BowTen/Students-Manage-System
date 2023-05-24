@@ -54,6 +54,7 @@ public class Course {
         Comparator<Double> comparator = Collections.reverseOrder();
         Collections.sort(grades, comparator);
         averageGrades /= GetNumber();
+        averageGrades = new BigDecimal(averageGrades).setScale(2,BigDecimal.ROUND_UP).doubleValue();
         averagePoint = new BigDecimal(averageGrades >= 60.0 ? ((averageGrades - 60.0) / 10.0) + 1.0 : 0).setScale(2,BigDecimal.ROUND_UP).doubleValue();
     }
 

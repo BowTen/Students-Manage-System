@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/18 做好了修改密码功能">
+    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/19 添加了升序降序查询功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bean/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bean/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/windows/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/windows/RootWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/RootWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/windows/LoginStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/LoginStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datasrc/courseData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/courseData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datasrc/studentsData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/studentsData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/datasrc/userinfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/userinfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,21 +40,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Codes/Students Management System/src/imgresrc",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Codes/Students Management System/src/imgresrc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Codes\Students Management System\src\imgresrc" />
@@ -99,7 +95,14 @@
       <workItem from="1684313736503" duration="14053000" />
       <workItem from="1684335271726" duration="3579000" />
       <workItem from="1684403471661" duration="9786000" />
-      <workItem from="1684418693715" duration="7016000" />
+      <workItem from="1684418693715" duration="7198000" />
+      <workItem from="1684426259869" duration="468000" />
+      <workItem from="1684455144337" duration="2501000" />
+      <workItem from="1684459140101" duration="451000" />
+      <workItem from="1684476686966" duration="503000" />
+      <workItem from="1684486477963" duration="62000" />
+      <workItem from="1684892531884" duration="163000" />
+      <workItem from="1684918421030" duration="79000" />
     </task>
     <task id="LOCAL-00001" summary="第一天做了简单的登录注册界面">
       <created>1683297317186</created>
@@ -185,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684416056976</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="5/19 添加了升序降序查询功能">
+      <created>1684426166687</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1684426166687</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +224,8 @@
     <MESSAGE value="5/17 做了root界面的学生和课程查询" />
     <MESSAGE value="5/17 做了root界面的信息检索" />
     <MESSAGE value="5/18 做好了修改密码功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="5/18 做好了修改密码功能" />
+    <MESSAGE value="5/19 添加了升序降序查询功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="5/19 添加了升序降序查询功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

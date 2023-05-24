@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LoginStart extends JFrame implements ActionListener {
     //标题
-    String title = "学生管理系统登陆界面";
+    String title = "学生成绩管理系统";
 
     //窗口宽度
     final int WIDTH = 800;
@@ -22,7 +22,7 @@ public class LoginStart extends JFrame implements ActionListener {
     final int HEIGHT = 1200;
 
     //定义按钮
-    private JButton login = new JButton("登陆");
+    private JButton login = new JButton("登录");
 
     //定义文本输入框
     JTextField userNameText = new JTextField();
@@ -64,7 +64,7 @@ public class LoginStart extends JFrame implements ActionListener {
         userNameLab.setForeground(new Color(0,200,200));
         passwordLab.setForeground(new Color(0,200,200));
         //设置字体位置
-        titleLab.setBounds(55,100,1000,80);
+        titleLab.setBounds(140,100,1000,80);
         userNameLab.setBounds(50,220,200,40);
         passwordLab.setBounds(50,320,200,40);
 
@@ -136,11 +136,12 @@ public class LoginStart extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null,"密码不能为空");
                 return;
             }
+            //登陆成功
             if(allUsers.contains(new Student(identityInput,passwordInput))){
-                if(identityInput.equals("root"))
+                if(identityInput.equals("root"))//root用户
                     new RootWindow();
                 else
-                    new MainWindow(identityInput);
+                    new MainWindow(identityInput);//学生用户
                 setVisible(false);
                 return;
             }else{

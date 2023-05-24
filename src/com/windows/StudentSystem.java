@@ -4,8 +4,7 @@ import java.io.IOException;
 
 public class StudentSystem {
     public static void main(String[] args) throws IOException {
+        //创建登录界面对象
         LoginStart loginWindow = new LoginStart();
-//        new MainWindow("2022000025");
-//        new RootWindow();
     }
 }
