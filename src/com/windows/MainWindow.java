@@ -41,7 +41,7 @@ public class MainWindow extends JFrame {
     TitledBorder infBorder = new TitledBorder("信息展示区");
 
     //用户信息文件地址
-    public String userDataPath = "D:\\Codes\\Students Management System\\src\\datasrc\\userinfo.txt";
+    public String userDataPath = "datasrc/userinfo.txt";
 
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};

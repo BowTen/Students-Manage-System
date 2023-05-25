@@ -21,6 +21,10 @@ public class LoginStart extends JFrame implements ActionListener {
     //窗口高度
     final int HEIGHT = 1200;
 
+    //文件地址
+    String userDataPath = new String("datasrc/userinfo.txt");
+    String backGroundPath = new String("src/imgresrc/法国吕衲峰.png");
+
     //定义按钮
     private JButton login = new JButton("登录");
 
@@ -42,7 +46,7 @@ public class LoginStart extends JFrame implements ActionListener {
     }
 
     private void initData() throws IOException {
-        List<String> userInfo = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\userinfo.txt");
+        List<String> userInfo = FileUtil.readUtf8Lines(userDataPath);
         for (String s : userInfo) {
             String[] splits = s.split("&");
             allUsers.add(new Student(splits[0],splits[1]));
@@ -99,7 +103,7 @@ public class LoginStart extends JFrame implements ActionListener {
     }
 
     private void initImage() {
-        JLabel bgJLabel = new JLabel(new ImageIcon("D:\\Codes\\Students Management System\\src\\imgresrc\\法国吕衲峰.png"));
+        JLabel bgJLabel = new JLabel(new ImageIcon(backGroundPath));
         //设置图片位置，宽高
         bgJLabel.setBounds(0,0,WIDTH, HEIGHT);
         getContentPane().add(bgJLabel);

@@ -45,6 +45,11 @@ public class RootWindow extends JFrame {
     TitledBorder consoleBorder = new TitledBorder("操作区");
     TitledBorder infBorder = new TitledBorder("信息展示区");
 
+    //学生数据地址
+    String stuDataPath = new String("datasrc/studentsData");
+    //课程数据地址
+    String courseDataPath = new String("datasrc/courseData");
+
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
     private final String title = "学生管理系统";
@@ -69,9 +74,9 @@ public class RootWindow extends JFrame {
     //初始化数据
     private void initData() {
         //读取学生信息
-        stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
+        stuData = FileUtil.readUtf8Lines(stuDataPath);
         //读取课程信息
-        courseData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
+        courseData = FileUtil.readUtf8Lines(courseDataPath);
 
 
         //设置边框

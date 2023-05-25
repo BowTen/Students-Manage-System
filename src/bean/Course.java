@@ -13,6 +13,9 @@ public class Course {
     public Map<String, Double> students = new HashMap<String,Double>();
     public ArrayList<Double> grades = new ArrayList<Double>();
 
+    //课程数据地址
+    String courseDataPath = new String("datasrc/courseData");
+
     //排序参数
     //升序
     public static final int GREATER = 1;
@@ -28,7 +31,7 @@ public class Course {
     //构造方法
     public Course(String courseName){
         //读入数据
-        List<String> allCourse = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
+        List<String> allCourse = FileUtil.readUtf8Lines(courseDataPath);
         for (String s1 : allCourse) {
             if (s1.split("&")[0].equals(courseName)) {
                 String[] split = s1.split("&");

@@ -23,6 +23,12 @@ public class Student{
     //课程
     public ArrayList<Course> courses = new ArrayList<Course>();
 
+    //课程数据地址
+    String courseDataPath = new String("datasrc/courseData");
+    //学生数据地址
+    String stuDataPath = new String("datasrc/studentsData");
+
+
     //排序参数
     //升序
     public static final int GREATER = 1;
@@ -41,7 +47,7 @@ public class Student{
     //构造方法
     public Student(String id){
         //读取数据
-        List<String> stuData = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\studentsData");
+        List<String> stuData = FileUtil.readUtf8Lines(stuDataPath);
         for (String s : stuData) {
             if (s.split("&")[0].equals(id)) {
                 String tmp[] = s.split("&");
@@ -52,7 +58,7 @@ public class Student{
                 _class = tmp[4];
                 String coursesData[] = tmp[5].split("#");
                 //初始化课程
-                List<String> allCourse = FileUtil.readUtf8Lines("D:\\Codes\\Students Management System\\src\\datasrc\\courseData");
+                List<String> allCourse = FileUtil.readUtf8Lines(courseDataPath);
                 for (String cours : coursesData) {
                     courses.add(new Course(cours));
                 }
