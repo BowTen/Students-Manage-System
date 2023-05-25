@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Student{
+    //密码
     private String passWord = null;
     //学号
     public String id = null;
@@ -36,16 +37,7 @@ public class Student{
     //降序
     public static final int LESS = 0;
 
-    //构造方法
-    public Student(String id, String name, String academy, String major, String _class) {
-        this.id = id;
-        this.name = name;
-        this.academy = academy;
-        this.major = major;
-        this._class = _class;
-    }
-
-    //构造方法
+    //构造方法（根据序号自动读入文件数据）
     public Student(String id){
         //读取数据
         List<String> stuData = FileUtil.readUtf8Lines(stuDataPath);
@@ -68,6 +60,16 @@ public class Student{
         }
     }
 
+    //构造方法
+    public Student(String id, String name, String academy, String major, String _class) {
+        this.id = id;
+        this.name = name;
+        this.academy = academy;
+        this.major = major;
+        this._class = _class;
+    }
+
+    //构造方法
     public Student(String id, String passWord) {
         this.passWord = passWord;
         this.id = id;
@@ -100,6 +102,7 @@ public class Student{
         return rowData;
     }
 
+    //降序排序
     private void lessSort(Object[][] rowData) {
         Arrays.sort(rowData, new Comparator<Object[]>() {
             @Override
@@ -115,6 +118,7 @@ public class Student{
         });
     }
 
+    //升序排序
     private void greaterSort(Object[][] rowData) {
         Arrays.sort(rowData, new Comparator<Object[]>() {
             @Override

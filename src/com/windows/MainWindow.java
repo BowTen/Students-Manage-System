@@ -44,9 +44,13 @@ public class MainWindow extends JFrame {
     //用户信息文件地址
     public File userDataPath = new File("src/datasrc/userinfo.txt");
 
+    //成绩表数据
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
+
+    //标题
     private final String title = "学生管理系统";
+    //窗口宽高
     private final int WIDTH = 1200;
     private final int HEIGHT = 1400;
 
@@ -69,26 +73,6 @@ public class MainWindow extends JFrame {
         curUser = new Student(id);
 
         rowData = curUser.getGradesRowData(Student.LESS);
-//        if (curUser == null)
-//            curUser = new Student();
-//        int row = curUser.courses.size();
-//        rowData = new Object[row][5];
-//        for (int i = 0; i < row; i++) {
-//            rowData[i][0] = i + 1;
-//            rowData[i][1] = curUser.courses.get(i).name;
-//            Double grades = curUser.courses.get(i).GetGrades(curUser.name);
-//            if (grades == null) {
-//                rowData[i][2] = "暂无数据";
-//                rowData[i][3] = "暂无数据";
-//                rowData[i][4] = "暂无数据";
-//            } else {
-//                //计算绩点并保留两位小数
-//                Double point = new BigDecimal(grades >= 60.0 ? ((grades - 60.0) / 10.0) + 1.0 : 0).setScale(2, BigDecimal.ROUND_UP).doubleValue();
-//                rowData[i][2] = grades;
-//                rowData[i][3] = point;
-//                rowData[i][4] = curUser.courses.get(i).GetRank(curUser.name);
-//            }
-//        }
 
         if (curUser == null)
             curUser = new Student(null, null, null, null, null);

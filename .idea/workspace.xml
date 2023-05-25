@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/25 test">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bean/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bean/JTableDemo.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bean/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/windows/LoginStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/LoginStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/windows/RootWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/RootWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datasrc/courseData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/courseData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datasrc/studentsData" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/studentsData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datasrc/userinfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/userinfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +106,7 @@
       <workItem from="1684930303295" duration="61000" />
       <workItem from="1685008989793" duration="21000" />
       <workItem from="1685009616425" duration="4364000" />
+      <workItem from="1685015488894" duration="572000" />
     </task>
     <task id="LOCAL-00001" summary="第一天做了简单的登录注册界面">
       <created>1683297317186</created>

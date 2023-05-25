@@ -51,9 +51,13 @@ public class RootWindow extends JFrame {
     //课程数据地址
     File courseDataPath = new File("src/datasrc/courseData");
 
+    //成绩表数据
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
+
+    //标题
     private final String title = "学生管理系统";
+    //窗口宽高
     private final int WIDTH = 1200;
     private final int HEIGHT = 1400;
 

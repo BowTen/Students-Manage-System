@@ -7,11 +7,22 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Course {
+    //课程平均成绩
     private double averageGrades = 0;
+
+    //平均绩点
     private double averagePoint = 0;
+
+    //课程名称
     public String name;
+
+    //任课教师
     public String teacher;
+
+    //学生信息
     public Map<String, Double> students = new HashMap<String,Double>();
+
+    //课程成绩数据表
     public ArrayList<Double> grades = new ArrayList<Double>();
 
     //课程数据地址
@@ -29,7 +40,8 @@ public class Course {
         this.teacher = teacher;
     }
 
-    //构造方法
+
+    //构造方法（依靠课程名称自动读入文件数据）
     public Course(String courseName){
         //读入数据
         List<String> allCourse = FileUtil.readUtf8Lines(courseDataPath);
@@ -120,6 +132,7 @@ public class Course {
         return rowData;
     }
 
+    //降序排序
     private void lessSort(Object[][] rowData) {
         Arrays.sort(rowData, new Comparator<Object[]>() {
             @Override
@@ -135,6 +148,7 @@ public class Course {
         });
     }
 
+    //升序排序
     private void greaterSort(Object[][] rowData) {
         Arrays.sort(rowData, new Comparator<Object[]>() {
             @Override
