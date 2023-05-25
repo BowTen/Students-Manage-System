@@ -9,6 +9,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Stack;
 
@@ -46,9 +47,9 @@ public class RootWindow extends JFrame {
     TitledBorder infBorder = new TitledBorder("信息展示区");
 
     //学生数据地址
-    String stuDataPath = new String("datasrc/studentsData");
+    File stuDataPath = new File("src/datasrc/studentsData");
     //课程数据地址
-    String courseDataPath = new String("datasrc/courseData");
+    File courseDataPath = new File("src/datasrc/courseData");
 
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};

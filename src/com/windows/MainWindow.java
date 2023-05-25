@@ -8,6 +8,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
@@ -41,7 +42,7 @@ public class MainWindow extends JFrame {
     TitledBorder infBorder = new TitledBorder("信息展示区");
 
     //用户信息文件地址
-    public String userDataPath = "datasrc/userinfo.txt";
+    public File userDataPath = new File("src/datasrc/userinfo.txt");
 
     Object rowData[][];
     Object headData[] = {"序号", "课程", "分数", "绩点", "班级排名"};
@@ -526,7 +527,7 @@ public class MainWindow extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null,"旧密码错误");
                 }
-                    System.out.println("修改");
+                System.out.println("修改");
             }
 
             private boolean checkOldPasswd(String password) {

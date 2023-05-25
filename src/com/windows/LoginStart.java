@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class LoginStart extends JFrame implements ActionListener {
     final int HEIGHT = 1200;
 
     //文件地址
-    String userDataPath = new String("datasrc/userinfo.txt");
-    String backGroundPath = new String("src/imgresrc/法国吕衲峰.png");
+    File userDataPath = new File("src/datasrc/userinfo.txt");
+    File backGroundPath = new File("src/imgresrc/法国吕衲峰.png");
 
     //定义按钮
     private JButton login = new JButton("登录");
@@ -103,7 +104,7 @@ public class LoginStart extends JFrame implements ActionListener {
     }
 
     private void initImage() {
-        JLabel bgJLabel = new JLabel(new ImageIcon(backGroundPath));
+        JLabel bgJLabel = new JLabel(new ImageIcon(backGroundPath.toString()));
         //设置图片位置，宽高
         bgJLabel.setBounds(0,0,WIDTH, HEIGHT);
         getContentPane().add(bgJLabel);

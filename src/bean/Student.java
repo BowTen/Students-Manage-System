@@ -2,6 +2,7 @@ package bean;
 
 import cn.hutool.core.io.FileUtil;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +25,9 @@ public class Student{
     public ArrayList<Course> courses = new ArrayList<Course>();
 
     //课程数据地址
-    String courseDataPath = new String("datasrc/courseData");
+    File courseDataPath = new File("src/datasrc/courseData");
     //学生数据地址
-    String stuDataPath = new String("datasrc/studentsData");
+    File stuDataPath = new File("src/datasrc/studentsData");
 
 
     //排序参数
