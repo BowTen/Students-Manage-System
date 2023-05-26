@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/25 test">
-      <change beforePath="$PROJECT_DIR$/src/bean/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bean/JTableDemo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bean/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bean/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/windows/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/windows/RootWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/RootWindow.java" afterDir="false" />
+    <list default="true" id="a134ddcd-f5ed-4028-81cb-d5e6f1a2e50b" name="Changes" comment="5/25 修改文件地址为相对地址，整理代码">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/windows/StudentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/windows/System.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/datasrc/userinfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/datasrc/userinfo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +104,10 @@
       <workItem from="1684930303295" duration="61000" />
       <workItem from="1685008989793" duration="21000" />
       <workItem from="1685009616425" duration="4364000" />
-      <workItem from="1685015488894" duration="572000" />
+      <workItem from="1685015488894" duration="801000" />
+      <workItem from="1685063014451" duration="642000" />
+      <workItem from="1685085160083" duration="658000" />
+      <workItem from="1685098580714" duration="5909000" />
     </task>
     <task id="LOCAL-00001" summary="第一天做了简单的登录注册界面">
       <created>1683297317186</created>
@@ -213,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685011801270</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="5/25 修改文件地址为相对地址，整理代码">
+      <created>1685016252080</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1685016252081</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,7 +253,8 @@
     <MESSAGE value="5/19 添加了升序降序查询功能" />
     <MESSAGE value="5/24" />
     <MESSAGE value="5/25 test" />
-    <option name="LAST_COMMIT_MESSAGE" value="5/25 test" />
+    <MESSAGE value="5/25 修改文件地址为相对地址，整理代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="5/25 修改文件地址为相对地址，整理代码" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
